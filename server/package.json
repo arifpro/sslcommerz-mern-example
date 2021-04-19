@@ -11,6 +11,9 @@
     "type": "git",
     "url": "git+https://github.com/arifpro/sslcommerz-mern-example.git"
   },
+  "engines": {
+    "node": "15.x"
+  },
   "keywords": [
     "nodejs",
     "sslcommerz",

@@ -2,7 +2,7 @@
   "name": "sslcommerz-server",
   "version": "1.0.1",
   "description": "sslcommerz nodejs integration",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon src/app.js",
     "start": "node src/app.js"

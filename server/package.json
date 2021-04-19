@@ -1,0 +1,32 @@
+{
+  "name": "sslcommerz-server",
+  "version": "1.0.0",
+  "description": "sslcommerz nodejs integration",
+  "main": "src/app.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arifpro/sslcommerz-mern-example.git"
+  },
+  "keywords": [
+    "nodejs",
+    "sslcommerz",
+    "server",
+    "backend",
+    "payment",
+    "bd-payment",
+    "payment-gateway"
+  ],
+  "author": "Md Arif Hossain | http://devarif.me",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/arifpro/sslcommerz-mern-example/issues"
+  },
+  "homepage": "https://github.com/arifpro/sslcommerz-mern-example#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

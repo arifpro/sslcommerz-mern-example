@@ -1,0 +1,43 @@
+.home {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  margin-top: 10px;
+
+  .home__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(../assets/logo.png) no-repeat;
+    background-position: center;
+    background-size: 10%, 10%;
+
+    .home__reactLogo {
+      width: 50%;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .home__reactLogo {
+        animation: HomeLogoSpin infinite 20s linear;
+      }
+    }
+
+    @keyframes HomeLogoSpin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  .home__link {
+    color: #61dafb;
+  }
+}

@@ -1,0 +1,39 @@
+.loading {
+  background-color: #282c34;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .loading__logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: url(../assets/logo.png) no-repeat;
+    background-position: center;
+    background-size: 10%, 10%;
+
+    .loading__reactLogo {
+      width: 50%;
+    }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .loading__reactLogo {
+        animation: LoadingLogoSpin infinite 20s linear;
+      }
+    }
+
+    @keyframes LoadingLogoSpin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  }
+
+  .loading__link {
+    color: #61dafb;
+  }
+}

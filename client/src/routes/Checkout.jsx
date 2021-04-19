@@ -36,7 +36,10 @@ const Checkout = (props) => {
         // console.log(data);
 
         axios
-            .post(`http://localhost:6000/api/payment/checkout`, JSON.stringify(data))
+            .post(
+                `https://sslcommerz-node.herokuapp.com/api/payment/checkout`,
+                JSON.stringify(data)
+            )
             // .get(`http://localhost:6000/api/payment/checkout`, data)
             // .then((res) => res.json())
             .then((res) => console.log(res))

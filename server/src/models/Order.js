@@ -13,14 +13,23 @@ const orderSchema = new mongoose.Schema(
     },
     totalAmount: {
       type: Number,
+      default: 0,
     },
     deliveryMethod: {
       type: String,
-      required: true,
+      default: "",
     },
     numItem: {
       type: Number,
+      default: 0,
+    },
+    transactionId: {
+      type: String,
       required: true,
+    },
+    paymentDone: {
+      type: Boolean,
+      default: false,
     },
     customerInfo: {
       type: Object,
@@ -40,7 +49,7 @@ const orderSchema = new mongoose.Schema(
     shippingInfo: {
       type: Object,
       default: {
-        shippingName: "",
+        name: "",
         shippingAdd1: "",
         shippingAdd2: "",
         shippingCity: "",

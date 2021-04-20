@@ -1,6 +1,5 @@
 {
   "name": "sslcommerz-client",
-  "proxy": "http://localhost:6000",
   "version": "1.0.0",
   "private": true,
   "dependencies": {

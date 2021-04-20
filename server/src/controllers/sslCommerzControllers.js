@@ -13,7 +13,7 @@ const payment = new PaymentSession(
 
 exports.SSLCommerz_payment_init = async (req, res) => {
   // console.log(req.body);
-  console.log(req)
+  // console.log(req)
 
   const {
     cartItems,
@@ -41,7 +41,7 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       // Set the urls
       payment.setUrls({
         // success: "yoursite.com/success", // If payment Succeed
-        success: `http://localhost:1235/?transactionId=${transactionId}`, // If payment Succeed
+        success: `http://localhost:7001/api/payment/success?transactionId=${transactionId}`, // If payment Succeed
         fail: "yoursite.com/fail", // If payment failed
         cancel: "yoursite.com/cancel", // If user cancel payment
         ipn: "yoursite.com/ipn", // SSLCommerz will send http post request in this link
@@ -96,7 +96,7 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       payment.paymentInit().then(async (response) => {
         // console.log(response);
         res.send(response["GatewayPageURL"]);
-        paymentDone = response["status"] === "SUCCESS";
+        // paymentDone = response["status"] === "SUCCESS";
 
         const newOrder = new Order({
           cartItems,
@@ -106,11 +106,10 @@ exports.SSLCommerz_payment_init = async (req, res) => {
           customerInfo,
           shippingInfo,
           transactionId,
-          paymentDone,
+          // paymentDone,
         });
         const save = await newOrder.save();
 
-        // if (save) return res.status(200).json({ success: "Order successful" });
       });
     } catch (err) {
       return res.status(400).json({ error });
@@ -121,9 +120,6 @@ exports.SSLCommerz_payment_init = async (req, res) => {
 };
 
 // -------------------------------- After Success
-
-// console.log(response['status']);
-//     SUCCESS
 
 // console.log(response['sessionkey']);
 //     D37CD2C0A0D322991531D217E194F981

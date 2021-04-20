@@ -3,7 +3,7 @@ const Footer = () => {
 
     return (
         <main style={{ textAlign: 'center' }}>
-            <h1>Footer | {year}</h1>
+            <p>Footer | {year}</p>
         </main>
     );
 };

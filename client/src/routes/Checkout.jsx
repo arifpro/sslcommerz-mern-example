@@ -1,8 +1,10 @@
 import axios from 'axios';
+import { useState } from 'react';
 import Layout from '../components/Layout';
 
 const Checkout = (props) => {
-    console.log(props);
+    const { location } = props;
+    const [paymentUrl, setPaymentUrl] = useState('');
 
     const onHandleCheckout = () => {
         const data = {
@@ -36,38 +38,47 @@ const Checkout = (props) => {
         // console.log(data);
 
         axios
-            .post(
-                `https://sslcommerz-node.herokuapp.com/api/payment/checkout`,
-                JSON.stringify(data)
-            )
-            // .get(`http://localhost:6000/api/payment/checkout`, data)
-            // .then((res) => res.json())
-            .then((res) => console.log(res))
+            .post(`http://localhost:7001/api/payment/checkout`, data)
+            .then((res) => setPaymentUrl(res.data))
             .catch((error) => {
                 console.log(error.message);
             });
-
-        // axios
-        //     .post('http://localhost:6000/api/payment/checkout/', data)
-        //     .then((response) => console.log(response));
-
-        // const options = {
-        //     method: 'POST',
-        //     body: data,
-        // };
-        // fetch('http://localhost:6000/api/payment/checkout/', options)
-        //     // .then((response) => response.json())
-        //     .then((response) => {
-        //         console.log(response);
-        //     });
     };
 
     return (
         <Layout title="Checkout">
-            <h1 style={{ marginTop: '5rem' }}>Checkout Page</h1>
-            <button type="button" onClick={() => onHandleCheckout()}>
-                Click here to checkout order
-            </button>
+            <div style={{ textAlign: 'center', marginTop: '5rem' }}>
+                <button
+                    type="button"
+                    onClick={() => onHandleCheckout()}
+                    style={{
+                        margin: '2.5rem 0',
+                        padding: '8px 14px',
+                        border: 'none',
+                        background: 'black',
+                        color: 'white',
+                        fontSize: '14px',
+                        fontWeight: 'bold',
+                        borderRadius: '25px',
+                    }}
+                >
+                    Click here to checkout your order
+                </button>
+                {location.pathname.search('transaction_') !== -1 && (
+                    <>
+                        <h3 style={{ margin: '2.5rem 0' }}>payment successful</h3>
+                        <h4 style={{ margin: '2.5rem 0' }}>
+                            Your transaction id is{' '}
+                            <strong style={{ color: 'gray' }}>
+                                {location.pathname.split('/')[2]}
+                            </strong>
+                        </h4>
+                    </>
+                )}
+                <div style={{ margin: '2.5rem 0', padding: '0 2rem' }}>
+                    <a href={paymentUrl}>{paymentUrl}</a>
+                </div>
+            </div>
         </Layout>
     );
 };

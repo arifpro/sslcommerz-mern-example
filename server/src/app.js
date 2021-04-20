@@ -21,17 +21,21 @@ app.use(function(req, res, next) {
 });
 app.use(morgan("dev"));
 app.use(cookieParser());
+app.use(cors());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
 // Routes
-app.use("/api/payment", cors({origin: 'http://localhost:1235',}), sslCommerzRoutes);
-app.use("/api/test", (req, res) => {
-  res.send("Hello")
+app.use("/api/payment", sslCommerzRoutes);
+app.post("/api/payment/success", (req, res) => {
+  // console.log(req.query)
+  // console.log(req.query.transactionId)
+  res.redirect(`http://localhost:3000/checkout/${req.query.transactionId}`)
+  // res.json({req})
 });
 
 // Run Server
-const PORT = process.env.PORT || 6000;
+const PORT = process.env.PORT || 7001;
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

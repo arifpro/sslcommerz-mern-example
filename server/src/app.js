@@ -27,12 +27,6 @@ app.use(express.json());
 
 // Routes
 app.use("/api/payment", sslCommerzRoutes);
-app.post("/api/payment/success", (req, res) => {
-  // console.log(req.query)
-  // console.log(req.query.transactionId)
-  res.redirect(`http://localhost:3000/checkout/${req.query.transactionId}`)
-  // res.json({req})
-});
 
 // Run Server
 const PORT = process.env.PORT || 7001;

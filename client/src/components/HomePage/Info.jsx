@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import reactLogo from '../../assets/react-logo.png';
 import styles from '../../styles/InfoStyles.module.scss';
 
@@ -16,9 +17,23 @@ const Info = () => (
                 className={styles.home__reactLogo}
             />
         </a>
-        <p>
-            Edit <code>src/App.jsx</code> and save to reload.
-        </p>
+        <Link to="/checkout">
+            <button
+                type="button"
+                style={{
+                    margin: '2.5rem 0',
+                    padding: '8px 14px',
+                    border: 'none',
+                    background: 'black',
+                    color: 'white',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    borderRadius: '25px',
+                }}
+            >
+                Go to the checkout page for sslcommerz example
+            </button>
+        </Link>
         <a
             className={styles.home__link}
             href="https://reactjs.org"

@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
-const shortid = require("shortid");
+// const shortid = require("shortid");
 
 const orderSchema = new mongoose.Schema(
   {
     _id: {
       type: String,
-      default: shortid.generate,
+      // default: shortid.generate,
     },
     cartItems: {
       type: Array,

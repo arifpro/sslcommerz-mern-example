@@ -25,7 +25,7 @@ exports.SSLCommerz_payment_init = async (req, res) => {
   } = req.body;
 
   const transactionId = `transaction_${shortid.generate()}`;
-  let paymentDone = false;
+  // let paymentDone = false;
 
   if (
     !(cartItems.length >= 0) ||
@@ -41,14 +41,14 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       // Set the urls
       payment.setUrls({
         // success: "yoursite.com/success", // If payment Succeed
-        success: `http://localhost:7001/api/payment/success?transactionId=${transactionId}`, // If payment Succeed
-        fail: "yoursite.com/fail", // If payment failed
-        cancel: "yoursite.com/cancel", // If user cancel payment
+        success: `http://localhost:7001/api/payment/checkout/success?transactionId=${transactionId}`, // If payment Succeed
+        fail: `http://localhost:7001/api/payment/checkout/fail`, // If payment failed
+        cancel: `http://localhost:7001/api/payment/checkout/cancel`, // If user cancel payment
         ipn: "yoursite.com/ipn", // SSLCommerz will send http post request in this link
       });
       // Set order details
       payment.setOrderInfo({
-        total_amount: 0.1, // Number field
+        total_amount: totalAmount, // Number field
         currency: "BDT", // Must be three character string
         tran_id: transactionId, // Unique Transaction id
         emi_option: 0, // 1 or 0
@@ -59,33 +59,36 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       });
 
       // Set customer info
+      const { cusName, cusEmail, cusAdd1, cusAdd2, cusCity, cusState, cusPostcode, cusCountry, cusPhone, cusFax } = customerInfo;
       payment.setCusInfo({
-        name: "Simanta Paul",
-        email: "simanta@bohubrihi.com",
-        add1: "66/A Midtown",
-        add2: "Andarkilla",
-        city: "Chittagong",
-        state: "Optional",
-        postcode: 4000,
-        country: "Bangladesh",
-        phone: "010000000000",
-        fax: "Customer_fax_id",
+        name: cusName,
+        email: cusEmail,
+        add1: cusAdd1,
+        add2: cusAdd2,
+        city: cusCity,
+        state: cusState,
+        postcode: cusPostcode,
+        country: cusCountry,
+        phone: cusPhone,
+        fax: cusFax,
       });
 
       // Set shipping info
+      const { name, shippingAdd1, shippingAdd2, shippingCity, shippingState, shippingPostcode, shippingCountry } = shippingInfo;
       payment.setShippingInfo({
-        method: "Courier", //Shipping method of the order. Example: YES or NO or Courier
-        num_item: 2,
-        name: "Simanta Paul",
-        add1: "66/A Midtown",
-        add2: "Andarkilla",
-        city: "Chittagong",
-        state: "Optional",
-        postcode: 4000,
-        country: "Bangladesh",
+        method: deliveryMethod, //Shipping method of the order. Example: YES or NO or Courier
+        num_item: numItem,
+        name: name,
+        add1: shippingAdd1,
+        add2: shippingAdd2,
+        city: shippingCity,
+        state: shippingState,
+        postcode:shippingPostcode,
+        country: shippingCountry,
       });
 
       // Set Product Profile
+      const {} = cartItems;
       payment.setProductInfo({
         product_name: "Computer",
         product_category: "Electronics",
@@ -99,6 +102,7 @@ exports.SSLCommerz_payment_init = async (req, res) => {
         // paymentDone = response["status"] === "SUCCESS";
 
         const newOrder = new Order({
+          _id: transactionId,
           cartItems,
           totalAmount,
           deliveryMethod,
@@ -117,6 +121,33 @@ exports.SSLCommerz_payment_init = async (req, res) => {
   }
 
   // res.status(200).json({message: 'info ok'})
+};
+
+
+exports.SSLCommerz_payment_success = async (req, res) => {
+  const { transactionId } = req.query;
+
+  if (!transactionId) {
+    return res.json({ message: "transactionId must be required" });
+  } else {
+    const currentOrder = Order.findByIdAndUpdate(transactionId, {
+      paymentDone: true,
+      updatedAt: Date.now(),
+    });
+
+    currentOrder.exec((err, result) => {
+      if (err) console.log(err);
+      res.redirect(`${process.env.CLIENT_URL}/checkout/${transactionId}`)
+    });
+  }
+};
+
+exports.SSLCommerz_payment_fail = (req, res) => {
+  res.redirect(`${process.env.CLIENT_URL}/checkout/fail`);
+};
+
+exports.SSLCommerz_payment_cancel = (req, res) => {
+  res.redirect(`${process.env.CLIENT_URL}/checkout/cancel`);
 };
 
 // -------------------------------- After Success

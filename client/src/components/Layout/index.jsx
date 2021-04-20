@@ -8,7 +8,7 @@ const Layout = ({ children, title }) => (
             <title>{title}</title>
         </Helmet>
         <Navbar />
-        {children}
+        <div style={{ margin: '3rem 0' }}>{children}</div>
         <Footer />
     </main>
 );

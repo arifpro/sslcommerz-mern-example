@@ -1,8 +1,8 @@
 {
   "name": "sslcommerz-server",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "sslcommerz nodejs integration",
-  "main": "src/app.js",
+  "main": "app.js",
   "scripts": {
     "dev": "nodemon src/app.js",
     "start": "node src/app.js"
@@ -10,6 +10,9 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/arifpro/sslcommerz-mern-example.git"
+  },
+  "engines": {
+    "node": "15.x"
   },
   "keywords": [
     "nodejs",
@@ -28,5 +31,15 @@
   "homepage": "https://github.com/arifpro/sslcommerz-mern-example#readme",
   "devDependencies": {
     "nodemon": "^2.0.7"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "mongoose": "^5.12.4",
+    "morgan": "^1.10.0",
+    "shortid": "^2.2.16",
+    "ssl-commerz-node": "^1.0.2"
   }
 }

@@ -8,6 +8,7 @@ import styles from '../../styles/NavbarStyles.module.scss';
 
 // load pages by on hover (Eager Loading)
 const about = () => import('../../routes/About');
+const checkout = () => import('../../routes/Checkout');
 const home = () => import('../../routes/Home');
 
 const Navbar = () => (
@@ -20,6 +21,14 @@ const Navbar = () => (
         <section>
             <NavLink exact to="/" onMouseOver={() => home()} activeClassName={styles.selected}>
                 Home
+            </NavLink>
+            <NavLink
+                exact
+                to="/checkout"
+                onMouseOver={() => checkout()}
+                activeClassName={styles.selected}
+            >
+                Checkout
             </NavLink>
             <NavLink
                 exact

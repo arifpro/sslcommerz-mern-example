@@ -101,8 +101,8 @@ video {
   margin: 0;
   padding: 0;
   border: 0;
-  font-size: 100%;
-  font: inherit;
+  // font-size: 100%;
+  // font: inherit;
   vertical-align: baseline;
 }
 
@@ -121,10 +121,10 @@ section {
   display: block;
 }
 
-ol,
-ul {
-  list-style: none;
-}
+// ol,
+// ul {
+//   list-style: none;
+// }
 
 blockquote,
 q {

@@ -18,6 +18,7 @@
   },
   "rules": {
     "react/react-in-jsx-scope": 0,
+    "react-hooks/exhaustive-deps": 0,
     "react-hooks/rules-of-hooks": "error",
     "no-console": 0,
     "new-cap": 0,

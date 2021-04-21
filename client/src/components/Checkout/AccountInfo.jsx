@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import CustomInput from '../custom/CustomInput';
 import CustomInput2 from '../custom/CustomInput2';
 
@@ -13,7 +13,9 @@ const AccountInfo = ({ formData, setFormData, handleInputChangeCustomer, setErro
             ...name,
             [event.target.name]: event.target.value.trim(),
         });
+    };
 
+    useEffect(() => {
         setFormData({
             ...formData,
             customerInfo: {
@@ -21,7 +23,7 @@ const AccountInfo = ({ formData, setFormData, handleInputChangeCustomer, setErro
                 cusName: `${name.firstName} ${name.lastName}`,
             },
         });
-    };
+    }, [name]);
 
     return (
         <div>
@@ -90,8 +92,8 @@ const AccountInfo = ({ formData, setFormData, handleInputChangeCustomer, setErro
                 label2="State"
                 name1="cusCity"
                 name2="cusState"
-                value1={name?.customerInfo?.cusCity}
-                value2={name?.customerInfo?.cusState}
+                value1={formData?.customerInfo?.cusCity}
+                value2={formData?.customerInfo?.cusState}
                 onChange={handleInputChangeCustomer}
                 setError={setError}
                 required1
@@ -103,8 +105,8 @@ const AccountInfo = ({ formData, setFormData, handleInputChangeCustomer, setErro
                 label2="Country"
                 name1="cusPostcode"
                 name2="cusCountry"
-                value1={name?.customerInfo?.cusPostcode}
-                value2={name?.customerInfo?.cusCountry}
+                value1={formData?.customerInfo?.cusPostcode}
+                value2={formData?.customerInfo?.cusCountry}
                 onChange={handleInputChangeCustomer}
                 setError={setError}
                 required1

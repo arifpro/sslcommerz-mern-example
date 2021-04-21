@@ -17,7 +17,7 @@ const Checkout = () => {
         cartItems: cartData,
         totalAmount: 3870.85,
         deliveryMethod: 'Courier',
-        numItem: 4,
+        numItem: cartData.length,
         customerInfo: {
             cusName: '',
             cusEmail: '',
@@ -53,6 +53,16 @@ const Checkout = () => {
             ...formData,
             customerInfo: {
                 ...formData.customerInfo,
+                [event.target.name]: event.target.value.trim(),
+            },
+        });
+    };
+
+    const handleInputChangeShopping = (event) => {
+        setFormData({
+            ...formData,
+            shippingInfo: {
+                ...formData.shippingInfo,
                 [event.target.name]: event.target.value.trim(),
             },
         });
@@ -99,7 +109,9 @@ const Checkout = () => {
                         <Step label="Shipping">
                             <ShippingInfo
                                 formData={formData}
-                                handleInputChange={handleInputChange}
+                                setFormData={setFormData}
+                                // handleInputChange={handleInputChange}
+                                handleInputChangeShopping={handleInputChangeShopping}
                                 setError={setError}
                             />
                         </Step>

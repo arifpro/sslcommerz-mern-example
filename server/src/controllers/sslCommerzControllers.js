@@ -41,10 +41,10 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       // Set the urls
       payment.setUrls({
         // success: "yoursite.com/success", // If payment Succeed
-        success: `${process.env.CLIENT_URL}/api/payment/checkout/success?transactionId=${transactionId}`, // If payment Succeed
-        fail: `${process.env.CLIENT_URL}/api/payment/checkout/fail`, // If payment failed
-        cancel: `${process.env.CLIENT_URL}/api/payment/checkout/cancel`, // If user cancel payment
-        ipn: `${process.env.CLIENT_URL}/ipn`, // SSLCommerz will send http post request in this link
+        success: `${process.env.SERVER_URL}/api/payment/checkout/success?transactionId=${transactionId}`, // If payment Succeed
+        fail: `${process.env.SERVER_URL}/api/payment/checkout/fail`, // If payment failed
+        cancel: `${process.env.SERVER_URL}/api/payment/checkout/cancel`, // If user cancel payment
+        ipn: `${process.env.SERVER_URL}/ipn`, // SSLCommerz will send http post request in this link
       });
       // Set order details
       payment.setOrderInfo({

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useState } from 'react';
+import CustomInput from '../custom/CustomInput';
 
 const CheckoutForm = ({ location }) => {
     const [paymentUrl, setPaymentUrl] = useState('');
@@ -45,6 +46,7 @@ const CheckoutForm = ({ location }) => {
     };
     return (
         <div>
+            <CustomInput />
             <div style={{ textAlign: 'center', marginTop: '5rem' }}>
                 <button
                     type="button"

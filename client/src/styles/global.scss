@@ -17,6 +17,10 @@ code {
     monospace;
 }
 
+#button:disabled {
+  opacity: 0.5;
+}
+
 html,
 body,
 div,

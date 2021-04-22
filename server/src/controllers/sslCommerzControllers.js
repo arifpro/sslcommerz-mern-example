@@ -13,7 +13,6 @@ const payment = new PaymentSession(
 
 exports.SSLCommerz_payment_init = async (req, res) => {
   // console.log(req.body);
-  // console.log(req)
 
   const {
     cartItems,
@@ -41,10 +40,10 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       // Set the urls
       payment.setUrls({
         // success: "yoursite.com/success", // If payment Succeed
-        success: `http://localhost:7001/api/payment/checkout/success?transactionId=${transactionId}`, // If payment Succeed
-        fail: `http://localhost:7001/api/payment/checkout/fail`, // If payment failed
-        cancel: `http://localhost:7001/api/payment/checkout/cancel`, // If user cancel payment
-        ipn: "yoursite.com/ipn", // SSLCommerz will send http post request in this link
+        success: `${process.env.SERVER_URL}/api/payment/checkout/success?transactionId=${transactionId}`, // If payment Succeed
+        fail: `${process.env.SERVER_URL}/api/payment/checkout/fail`, // If payment failed
+        cancel: `${process.env.SERVER_URL}/api/payment/checkout/cancel`, // If user cancel payment
+        ipn: `${process.env.SERVER_URL}/ipn`, // SSLCommerz will send http post request in this link
       });
       // Set order details
       payment.setOrderInfo({
@@ -88,9 +87,8 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       });
 
       // Set Product Profile
-      const {} = cartItems;
       payment.setProductInfo({
-        product_name: "Computer",
+        product_name: cartItems.map(i => i.productName).join(', '),
         product_category: "Electronics",
         product_profile: "general",
       });
@@ -103,7 +101,11 @@ exports.SSLCommerz_payment_init = async (req, res) => {
 
         const newOrder = new Order({
           _id: transactionId,
-          cartItems,
+          cartItems: cartItems.map(item => {
+            return {
+              ...item, productImage: process.env.CLIENT_URL + item.productImage,
+            }
+          }),
           totalAmount,
           deliveryMethod,
           numItem,
@@ -120,7 +122,6 @@ exports.SSLCommerz_payment_init = async (req, res) => {
     }
   }
 
-  // res.status(200).json({message: 'info ok'})
 };
 
 
@@ -137,7 +138,7 @@ exports.SSLCommerz_payment_success = async (req, res) => {
 
     currentOrder.exec((err, result) => {
       if (err) console.log(err);
-      res.redirect(`${process.env.CLIENT_URL}/checkout/${transactionId}`)
+      res.redirect(`${process.env.CLIENT_URL}/checkout/success/${transactionId}`)
     });
   }
 };

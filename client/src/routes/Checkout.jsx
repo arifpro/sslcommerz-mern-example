@@ -37,7 +37,7 @@ const Checkout = (props) => {
                         <h4 style={{ margin: '2.5rem 0' }}>
                             Your transaction id is{' '}
                             <strong style={{ color: 'gray' }}>
-                                {location.pathname.split('/')[2]}
+                                {location.pathname.split('/')[3]}
                             </strong>
                         </h4>
                     )}

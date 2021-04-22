@@ -69,6 +69,23 @@
       width: 90%;
       margin: 0 5%;
       margin-bottom: 3rem;
+
+      .checkout__loading__icon {
+        @media (prefers-reduced-motion: no-preference) {
+          font-size: 18px;
+          margin-right: 10px;
+          animation: LoadingIconSpin infinite 2s linear;
+        }
+
+        @keyframes LoadingIconSpin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      }
     }
 
     @media (max-width: 590px) {

@@ -13,8 +13,6 @@ const Checkout = (props) => {
         if (path && path === 'success') setResponse('success');
         else if (path && path === 'fail') setResponse('failed');
         else if (path && path === 'cancel') setResponse('canceled');
-
-        console.log(path);
     }, []);
 
     return (

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
+import { VscLoading } from 'react-icons/vsc';
 import { MultiStepForm, Step } from 'react-multi-form';
 import cartData from '../../data';
 import styles from '../../styles/CheckoutStyles.module.scss';
@@ -239,14 +240,12 @@ const CheckoutPage = () => {
                             onClick={() => onHandleCheckout()}
                             disabled={loading}
                         >
-                            <span>Checkout</span>
                             {loading && (
-                                <i
-                                    className="fa fa-refresh fa-spin"
-                                    style={{ marginRight: '5px' }}
-                                />
+                                <>
+                                    <VscLoading className={styles.checkout__loading__icon} />
+                                    <span>Checking out...</span>
+                                </>
                             )}
-                            {loading && <span>Checking out</span>}
                             {!loading && <span>Checkout</span>}
                         </button>
                     )}

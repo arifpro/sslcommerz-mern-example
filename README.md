@@ -1,7 +1,7 @@
 
 # [SSLCommerz MERN Example](https://sslcommerz.netlify.app) &middot; [![Author Arif](https://img.shields.io/badge/Author-Arif-%3C%3E)](https://www.linkedin.com/in/proarif)
 
-A MERN (MongoDB, ExpressJs, ReactJs, NodeJs) stack app for test the Bangladesh's `sslcommerz` payment gateway with checkout page.
+A MERN (MongoDB, ExpressJs, ReactJs, NodeJs) stack app for test Bangladesh's `sslcommerz` payment gateway with the checkout page.
 
 ## A simple ReactJs site
 

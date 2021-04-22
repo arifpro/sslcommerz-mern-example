@@ -16,7 +16,7 @@ const Checkout = (props) => {
     }, []);
 
     return (
-        <Layout title="Checkout">
+        <Layout title="Checkout | SSLCommerz MERN Example">
             {response.length > 0 && (
                 <div style={{ margin: '5rem', textAlign: 'center' }}>
                     <h3

@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { IoAdd, IoRemove } from 'react-icons/io5';
 import cartData from '../../data';
-import './CartSidebar.css';
+import styles from '../../styles/CartItemsStyles.module.scss';
 
-const styles = {
+const styles2 = {
     btn: {
         cursor: 'pointer',
         position: 'relative',
@@ -41,7 +41,7 @@ const styles = {
     },
 };
 
-const CartSidebar = ({ customStyles, divStyle }) => {
+const CartItems = ({ customStyles, divStyle }) => {
     const [totalCal, setTotalCal] = useState(0);
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const CartSidebar = ({ customStyles, divStyle }) => {
 };
 
 const CartItem = ({ name, img, price, productQty, discountPrice, customStyles, divStyle }) => (
-    <section style={{ ...styles.cartItems, ...customStyles }} className="cartItems">
+    <section style={{ ...styles2.cartItems, ...customStyles }} className={styles.cartItems}>
         <aside>
             <div style={divStyle}>
                 <img src={img} alt="img" />
@@ -83,41 +83,43 @@ const CartItem = ({ name, img, price, productQty, discountPrice, customStyles, d
         </aside>
 
         <aside>
-            <div className="nameAndCross">
-                <p className="nameAndCross__name">{name}</p>
-                <button type="button" className="nameAndCross__cross" onClick={() => null}>
+            <div className={styles.nameAndCross}>
+                <p className={styles.nameAndCross__name}>{name}</p>
+                <button type="button" className={styles.nameAndCross__cross} onClick={() => null}>
                     ✕
                 </button>
             </div>
 
-            <div className="cost">
+            <div className={styles.cost}>
                 {discountPrice > 0 ? (
                     <>
-                        <p className="cost__price cost__oldPrice">
+                        <p className={`${styles.cost__price} ${styles.cost__oldPrice}`}>
                             <del>&#2547; {price.toFixed(2)} </del>
                         </p>
-                        <p className="cost__price cost__newPrice">
+                        <p className={`${styles.cost__price} ${styles.cost__newPrice}`}>
                             &#2547; {discountPrice.toFixed(2)}
                         </p>
                     </>
                 ) : (
-                    <p className="cost__price cost__oldPrice">&#2547; {price.toFixed(2)}</p>
+                    <p className={`${styles.cost__price} ${styles.cost__oldPrice}`}>
+                        &#2547; {price.toFixed(2)}
+                    </p>
                 )}
             </div>
 
-            <div className="totalAndQty">
-                <p className="totalAndQty__total">
+            <div className={styles.totalAndQty}>
+                <p className={styles.totalAndQty__total}>
                     Total: &#2547;{' '}
                     {!discountPrice
                         ? (price * productQty).toFixed(2)
                         : (discountPrice * productQty).toFixed(2)}
                 </p>
-                <div className="totalAndQty__qty">
-                    <IoRemove style={{ ...styles.iconOfSlide }} onClick={() => null} />
+                <div className={styles.totalAndQty__qty}>
+                    <IoRemove style={{ ...styles2.iconOfSlide }} onClick={() => null} />
                     <p>{productQty}</p>
                     <IoAdd
                         style={{
-                            ...styles.iconOfSlide,
+                            ...styles2.iconOfSlide,
                             color: 'white',
                             backgroundImage: 'linear-gradient(to bottom, #3bceb1 0%, #20a588 100%)',
                         }}
@@ -129,4 +131,4 @@ const CartItem = ({ name, img, price, productQty, discountPrice, customStyles, d
     </section>
 );
 
-export default CartSidebar;
+export default CartItems;

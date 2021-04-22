@@ -137,7 +137,7 @@ exports.SSLCommerz_payment_success = async (req, res) => {
 
     currentOrder.exec((err, result) => {
       if (err) console.log(err);
-      res.redirect(`${process.env.CLIENT_URL}/checkout/${transactionId}`)
+      res.redirect(`${process.env.CLIENT_URL}/checkout/success/${transactionId}`)
     });
   }
 };

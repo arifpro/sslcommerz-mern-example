@@ -58,31 +58,17 @@ const PaymentInfo = ({ formData, handleInputChange, setError }) => {
                 <h6 style={styles.rate}>{(subTotal * 1.15 + deliveryCharge).toFixed(2)}</h6>
             </div>
 
-            {/* <CustomInput2
-      placeholder1="Enter your first name"
-      placeholder2="Enter your last name"
-      label1="First Name"
-      label2="Last Name"
-      name1="firstName"
-      name2="lastName"
-      value1={formData?.firstName}
-      value2={formData?.lastName}
-      onChange={handleInputChange}
-      setError={setError}
-      required1
-      required2
-    /> */}
             <div className="orderNotes">
                 <CustomInput
                     placeholder="Notes about your order, e.g. special notes for delivery."
                     label="Order notes (optional)"
-                    name="projectName"
-                    value={formData?.projectName}
+                    name="notes"
+                    value={formData?.notes}
                     onChange={handleInputChange}
                     setError={setError}
                 />
             </div>
-            <style jsx>{`
+            <style>{`
                 .orderNotes {
                     margin-top: 2rem;
                     min-width: 426px;

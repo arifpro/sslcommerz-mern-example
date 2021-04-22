@@ -1,18 +1,23 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-// import { Link } from 'react-router-dom';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { MultiStepForm, Step } from 'react-multi-form';
 import cartData from '../../data';
+import styles from '../../styles/CheckoutStyles.module.scss';
 import Layout from '../Layout';
-import AccountInfo from './AccountInfo';
-import CartSidebar from './CartSidebar';
-import styles from './CheckoutStyles.module.css';
+import CartItems from './CartItems';
+import CustomerInfo from './CustomerInfo';
 import PaymentInfo from './PaymentInfo';
 import ShippingInfo from './ShippingInfo';
 
-const Checkout = () => {
+const CheckoutPage = () => {
     const [active, setActive] = useState(1);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
+    const [name, setName] = useState({
+        firstName: '',
+        lastName: '',
+    });
     const [formData, setFormData] = useState({
         cartItems: cartData,
         totalAmount: 3870.85,
@@ -31,15 +36,22 @@ const Checkout = () => {
             cusFax: '',
         },
         shippingInfo: {
-            name: 'customer name for shipping',
-            shippingAdd1: 'shipping address 1',
-            shippingAdd2: 'shipping address 2',
-            shippingCity: 'shipping city',
-            shippingState: 'shipping state',
-            shippingPostcode: 'shipping postcode',
+            name: '',
+            shippingAdd1: '',
+            shippingAdd2: '',
+            shippingCity: '',
+            shippingState: '',
+            shippingPostcode: '',
             shippingCountry: 'Bangladesh',
         },
     });
+
+    const onNameChange = (event) => {
+        setName({
+            ...name,
+            [event.target.name]: event.target.value.trim(),
+        });
+    };
 
     const handleInputChange = (event) => {
         setFormData({
@@ -68,9 +80,48 @@ const Checkout = () => {
         });
     };
 
+    const onHandleCheckout = async () => {
+        setLoading(true);
+
+        const SERVER_URL =
+            process.env.REACT_APP_SERVER_URL || 'https://sslcommerz-node.herokuapp.com';
+
+        const res = await axios.post(`${SERVER_URL}/api/payment/checkout`, formData);
+
+        console.log(res.data);
+        if (res.data?.length > 30) {
+            setLoading(false);
+            window.location.replace(res.data);
+        } else {
+            alert('Checkout failed'); // eslint-disable-line no-alert
+        }
+    };
+
     useEffect(() => {
-        console.log(formData);
-    }, [formData]);
+        setFormData({
+            ...formData,
+            customerInfo: {
+                ...formData.customerInfo,
+                cusName: `${name.firstName} ${name.lastName}`,
+            },
+        });
+    }, [name]);
+
+    useEffect(() => {
+        setFormData({
+            ...formData,
+            shippingInfo: {
+                ...formData.shippingInfo,
+                name: formData.customerInfo.cusName,
+                shippingAdd1: formData.customerInfo.cusAdd1,
+                shippingAdd2: formData.customerInfo.cusAdd2,
+                shippingCity: formData.customerInfo.cusCity,
+                shippingState: formData.customerInfo.cusState,
+                shippingPostcode: formData.customerInfo.cusPostcode,
+                shippingCountry: formData.customerInfo.cusCountry,
+            },
+        });
+    }, [formData.customerInfo]);
 
     return (
         <Layout>
@@ -85,7 +136,7 @@ const Checkout = () => {
                     >
                         Order Summary
                     </h3>
-                    <CartSidebar
+                    <CartItems
                         checkoutBtn={false}
                         customStyles={{
                             boxShadow: 'none',
@@ -99,9 +150,12 @@ const Checkout = () => {
                 <aside className={styles.checkout__checkoutForm}>
                     <MultiStepForm activeStep={active}>
                         <Step label="Customer">
-                            <AccountInfo
+                            <CustomerInfo
                                 formData={formData}
                                 setFormData={setFormData}
+                                name={name}
+                                setName={setName}
+                                onNameChange={onNameChange}
                                 handleInputChangeCustomer={handleInputChangeCustomer}
                                 setError={setError}
                             />
@@ -110,7 +164,9 @@ const Checkout = () => {
                             <ShippingInfo
                                 formData={formData}
                                 setFormData={setFormData}
-                                // handleInputChange={handleInputChange}
+                                name={name}
+                                setName={setName}
+                                onNameChange={onNameChange}
                                 handleInputChangeShopping={handleInputChangeShopping}
                                 setError={setError}
                             />
@@ -122,16 +178,6 @@ const Checkout = () => {
                                 setError={setError}
                             />
                         </Step>
-                        {/* <Step label="Review">
-                            <div style={{ textAlign: 'center' }}>
-                                <h1>Payment Success</h1>
-                                <Link to="/">
-                                    <button type="button" className={styles.checkoutForm__btn}>
-                                        Go to the Home page
-                                    </button>
-                                </Link>
-                            </div>
-                        </Step> */}
                     </MultiStepForm>
 
                     {error !== '' && <div className={styles.error}>{error}</div>}
@@ -153,20 +199,25 @@ const Checkout = () => {
                             onClick={() => {
                                 if (
                                     active === 1 &&
-                                    formData.firstName !== '' &&
-                                    formData.lastName !== '' &&
-                                    formData.phone !== ''
+                                    name.firstName !== '' &&
+                                    name.lastName !== '' &&
+                                    formData.customerInfo.cusAdd1 !== '' &&
+                                    formData.customerInfo.cusPhone !== '' &&
+                                    formData.customerInfo.cusEmail !== '' &&
+                                    formData.customerInfo.cusCity !== '' &&
+                                    formData.customerInfo.cusState !== '' &&
+                                    formData.customerInfo.cusPostcode !== ''
                                 ) {
                                     setActive(active + 1);
                                 } else if (
                                     active === 2 &&
-                                    formData.streetAddress !== '' &&
-                                    formData.city !== '' &&
-                                    formData.state !== '' &&
-                                    formData.phone !== ''
+                                    name.firstName !== '' &&
+                                    name.lastName !== '' &&
+                                    formData.shippingInfo.shippingAdd1 !== '' &&
+                                    formData.shippingInfo.shippingCity !== '' &&
+                                    formData.shippingInfo.shippingState !== '' &&
+                                    formData.shippingInfo.shippingPostcode !== ''
                                 ) {
-                                    setActive(active + 1);
-                                } else if (active === 3) {
                                     setActive(active + 1);
                                 } else {
                                     setError('Required fields must be provided');
@@ -180,35 +231,29 @@ const Checkout = () => {
                             </span>
                         </button>
                     ) : (
-                        <button type="button" className={styles.btn} style={{ marginTop: '2rem' }}>
+                        <button
+                            type="button"
+                            className={styles.checkout__checkoutForm__btn}
+                            id="button"
+                            style={{ marginTop: '2rem' }}
+                            onClick={() => onHandleCheckout()}
+                            disabled={loading}
+                        >
                             <span>Checkout</span>
+                            {loading && (
+                                <i
+                                    className="fa fa-refresh fa-spin"
+                                    style={{ marginRight: '5px' }}
+                                />
+                            )}
+                            {loading && <span>Checking out</span>}
+                            {!loading && <span>Checkout</span>}
                         </button>
                     )}
                 </aside>
-
-                {/* <aside className={styles.checkout__cartItems} style={{ width: '300px' }}>
-                    <h3
-                        style={{
-                            textAlign: 'center',
-                            fontFamily: 'Comic Sans MS',
-                            fontWeight: 'bold',
-                        }}
-                    >
-                        Order Summary
-                    </h3>
-                    <CartSidebar
-                        checkoutBtn={false}
-                        customStyles={{
-                            boxShadow: 'none',
-                            backgroundImage: 'none',
-                            background: '#f5f5f5',
-                        }}
-                        divStyle={{ background: '#e2e2e2' }}
-                    />
-                </aside> */}
             </main>
         </Layout>
     );
 };
 
-export default Checkout;
+export default CheckoutPage;

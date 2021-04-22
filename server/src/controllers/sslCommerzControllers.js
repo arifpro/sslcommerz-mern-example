@@ -13,7 +13,6 @@ const payment = new PaymentSession(
 
 exports.SSLCommerz_payment_init = async (req, res) => {
   // console.log(req.body);
-  // console.log(req)
 
   const {
     cartItems,
@@ -88,9 +87,8 @@ exports.SSLCommerz_payment_init = async (req, res) => {
       });
 
       // Set Product Profile
-      const {} = cartItems;
       payment.setProductInfo({
-        product_name: "Computer",
+        product_name: cartItems.map(i => i.productName).join(', '),
         product_category: "Electronics",
         product_profile: "general",
       });
@@ -103,7 +101,11 @@ exports.SSLCommerz_payment_init = async (req, res) => {
 
         const newOrder = new Order({
           _id: transactionId,
-          cartItems,
+          cartItems: cartItems.map(item => {
+            return {
+              ...item, productImage: process.env.CLIENT_URL + item.productImage,
+            }
+          }),
           totalAmount,
           deliveryMethod,
           numItem,
@@ -120,7 +122,6 @@ exports.SSLCommerz_payment_init = async (req, res) => {
     }
   }
 
-  // res.status(200).json({message: 'info ok'})
 };
 
 

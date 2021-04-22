@@ -34,7 +34,7 @@ const AboutDetails = () => (
                 <li>NodeJs</li>
                 <li>React Native</li>
                 <li>Flutter</li>
-                <li>Hosting (cPanel, Github pages, Netlify, Firebase, Vercel, etc.)</li>
+                <li>Hosting (cPanel, Github pages, Netlify, Heroku, Firebase, Vercel, etc.)</li>
             </ul>
         </section>
     </main>

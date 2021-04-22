@@ -6,7 +6,7 @@ import logo from '../../assets/logo.png';
 // styles
 import styles from '../../styles/NavbarStyles.module.scss';
 
-// load pages by on hover (Eager Loading)
+// load pages by on hover (Eager Load)
 const about = () => import('../../routes/About');
 const checkout = () => import('../../routes/Checkout');
 const home = () => import('../../routes/Home');

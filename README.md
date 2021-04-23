@@ -3,6 +3,10 @@
 
 A MERN (MongoDB, ExpressJs, ReactJs, NodeJs) stack app for test Bangladesh's `sslcommerz` payment gateway with the checkout page.
 
+# NPM package
+
+https://www.npmjs.com/package/ssl-commerz-node
+
 ## A simple ReactJs site
 
 - Multi step Form
